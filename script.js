@@ -140,29 +140,13 @@ const shortcutKeys = event => {
   if (button) button.classList.add("toggled");
 };
 
-const setHamburgerForSmallerScreen = (shouldShow) => {
-  if (!shouldShow) {
-    const sideBar = document.getElementById("side-bar");
-    sideBar.style.visibility = "visible";
-    return;
-  };
-
-  const hamburgerButton = document.querySelector("button#hamburger");
-  hamburgerButton.classList.remove("hidden");
+const isSmallScreen = () => {
+  const mediaQuery = matchMedia('(max-width: 985px)');
+  return mediaQuery.matches;
 };
 
-const toggleHamburgerButton = event => {
-  const hamburgerButton = document.querySelector("button#hamburger");
-  
-  event.target.matches === true 
-    ? hamburgerButton.classList.remove("hidden")
-    : hamburgerButton.classList.add("hidden");
-}
-
 const hideToolPanel = () => {
-  const mediaQuery = matchMedia('(max-width: 985px)');
-  const isSmallScreen = mediaQuery.matches;
-  if (!isSmallScreen) return;
+  if (!isSmallScreen()) return;
 
   const sideBar = document.getElementById("side-bar");
   sideBar.style.visibility ="hidden";
@@ -170,10 +154,7 @@ const hideToolPanel = () => {
 
 const toggleToolPanel = event => {
   event.stopPropagation();
-
-  const mediaQuery = matchMedia('(max-width: 985px)');
-  const isSmallScreen = mediaQuery.matches;
-  if (!isSmallScreen) return;
+  if (!isSmallScreen()) return;
 
   const sideBar = document.getElementById("side-bar");
   sideBar.style.visibility === "hidden"
@@ -182,12 +163,7 @@ const toggleToolPanel = event => {
 }
 
 window.addEventListener("DOMContentLoaded", event => {
-  const mediaQuery = matchMedia('(max-width: 985px)');
-
   initializeGrid();
-  setHamburgerForSmallerScreen(mediaQuery.matches);
-
-  mediaQuery.addEventListener("change", toggleHamburgerButton);
 
   const rangeInput = document.querySelector("input#sketchpad-size");
   rangeInput.addEventListener("input", changeSketchpadSizeLabelText);

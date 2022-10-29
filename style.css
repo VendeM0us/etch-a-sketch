@@ -63,6 +63,7 @@ button:hover, .toggled {
 }
 
 #side-bar {
+  visibility: visible;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -152,6 +153,12 @@ input[type="range"]::-moz-range-track {
   margin-top: -20px;
 }
 
+button#hamburger {
+  font-size: 36px;
+  margin-bottom: 12px;
+  display: none;
+}
+
 #sketchpad-container {
   display: flex;
   flex-direction: column;
@@ -204,8 +211,7 @@ footer {
   }
 
   button#hamburger {
-    font-size: 36px;
-    margin-bottom: 12px;
+    display: block;
   }
 }
 
