@@ -102,7 +102,7 @@ const toggleButton = event => {
   button.classList.add("toggled");
 };
 
-const resetSketchpad = event => {
+const resetSketchpad = () => {
   const sketchpad = document.getElementById("sketchpad");
   const pixels = sketchpad.children;
 
@@ -110,6 +110,30 @@ const resetSketchpad = event => {
     const pixel = pixels[i];
     pixel.style.backgroundColor = eraseMode();
   }
+};
+
+const shortcutKeys = event => {
+  let button;
+
+  switch(event.key) {
+    case 'd':
+      removePreviousToggledButton();
+      button = document.getElementById("draw");
+      break;
+    case 'e':
+      removePreviousToggledButton();
+      button = document.getElementById("eraser");
+      break;
+    case 'r':
+      removePreviousToggledButton();
+      button = document.getElementById("rainbow");
+      break;
+    case 'z':
+      resetSketchpad();
+      break;
+  }
+
+  if (button) button.classList.add("toggled");
 };
 
 window.addEventListener("DOMContentLoaded", event => {
@@ -133,4 +157,6 @@ window.addEventListener("DOMContentLoaded", event => {
 
   const resetButton = document.querySelector("button#reset");
   resetButton.addEventListener("click", resetSketchpad);
+
+  window.addEventListener("keydown", shortcutKeys);
 });
