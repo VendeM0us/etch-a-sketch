@@ -174,7 +174,7 @@ button#hamburger {
   overflow: hidden;
 }
 .pixel {
-  background-color: var(--sketchpad-color);
+  background-color: transparent;
 }
 
 footer {

@@ -1,4 +1,24 @@
-let rgbDarkness = 1;
+/*-------LOCAL STORAGE HANDLING------------*/
+const initializeState = () => {
+  let sketchpadSize = localStorage.getItem("sketchpadSize");
+
+  if (sketchpadSize) {
+    sketchpadSize = Number(sketchpadSize);
+    initializeGrid(sketchpadSize);
+  } else {
+    initializeGrid();
+  }
+}
+
+const removeAllPixelData = size => {
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      const coordinate = `${i}-${j}`;
+      localStorage.removeItem(`pixel-coordinate-${coordinate}`);
+    }
+  }
+}
+/*-----------------------------------------*/
 
 const changeSketchpadSizeLabelText = event => {
   const value = event.target.value;
@@ -9,16 +29,25 @@ const changeSketchpadSizeLabelText = event => {
 }
 
 const initializeGrid = (size = 16) => {
+  localStorage.setItem("sketchpadSize", size.toString());
+
   const sketchpad = document.getElementById("sketchpad");
   sketchpad.innerHTML = "";
   sketchpad.style.gridTemplate = `repeat(${size}, 1fr) / repeat(${size}, 1fr)`;
 
-  const totalPixelCount = size * size;
-  for (let i = 0; i < totalPixelCount; i++) {
-    const pixel = document.createElement("div");
-    pixel.setAttribute("class", "pixel");
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      const coordinate = `${i}-${j}`;
 
-    sketchpad.appendChild(pixel);
+      const pixel = document.createElement("div");
+      pixel.setAttribute("class", "pixel");
+      pixel.setAttribute("data-pixel-coordinate", coordinate);
+
+      const color = localStorage.getItem(`pixel-coordinate-${coordinate}`);
+      if (color) pixel.style.backgroundColor = color;
+  
+      sketchpad.appendChild(pixel);
+    }
   }
 };
 
@@ -26,6 +55,7 @@ const setSketchpadSize = event => {
   hideToolPanel();
   const rangeInput = document.querySelector("input#sketchpad-size");
   const size = Number(rangeInput.value);
+  removeAllPixelData(size);
   initializeGrid(size);
 };
 
@@ -46,14 +76,10 @@ const getRandomRGBValue = () => {
 };
 
 const rainbowMode = () => {
-  if (rgbDarkness < 0) rgbDarkness = 1;
-
-  const rgb1 = Math.floor(getRandomRGBValue() * rgbDarkness);
-  const rgb2 = Math.floor(getRandomRGBValue() * rgbDarkness);
-  const rgb3 = Math.floor(getRandomRGBValue() * rgbDarkness);
+  const rgb1 = getRandomRGBValue();
+  const rgb2 = getRandomRGBValue();
+  const rgb3 = getRandomRGBValue();
   const colorValue = `rgb(${rgb1}, ${rgb2}, ${rgb3})`;
-
-  rgbDarkness = Number((rgbDarkness - 0.1).toFixed(1));
 
   return colorValue;
 };
@@ -90,6 +116,13 @@ const colorPixel = event => {
   event.preventDefault();
   const pixel = event.target;
   pixel.style.backgroundColor = getColor();
+
+  const coordinate = pixel.dataset.pixelCoordinate;
+  if (pixel.style.backgroundColor === "transparent") {
+    localStorage.removeItem(`pixel-coordinate-${coordinate}`);
+  } else {
+    localStorage.setItem(`pixel-coordinate-${coordinate}`, pixel.style.backgroundColor);
+  }
 }
 
 const removePreviousToggledButton = () => {
@@ -113,6 +146,8 @@ const resetSketchpad = () => {
   for (let i = 0; i < pixels.length; i++) {
     const pixel = pixels[i];
     pixel.style.backgroundColor = eraseMode();
+    const coordinate = pixel.dataset.pixelCoordinate;
+    localStorage.removeItem(`pixel-coordinate-${coordinate}`);
   }
 };
 
@@ -160,10 +195,10 @@ const toggleToolPanel = event => {
   sideBar.style.visibility === "hidden"
     ? sideBar.style.visibility = "visible"
     : sideBar.style.visibility = "hidden";
-}
+};
 
 window.addEventListener("DOMContentLoaded", event => {
-  initializeGrid();
+  initializeState();
 
   const rangeInput = document.querySelector("input#sketchpad-size");
   rangeInput.addEventListener("input", changeSketchpadSizeLabelText);
