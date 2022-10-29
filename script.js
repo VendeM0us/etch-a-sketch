@@ -23,6 +23,7 @@ const initializeGrid = (size = 16) => {
 };
 
 const setSketchpadSize = event => {
+  toggleTools();
   const rangeInput = document.querySelector("input#sketchpad-size");
   const size = Number(rangeInput.value);
   initializeGrid(size);
@@ -97,12 +98,15 @@ const removePreviousToggledButton = () => {
 }
 
 const toggleButton = event => {
+  toggleTools();
   removePreviousToggledButton();
   const button = event.currentTarget;
   button.classList.add("toggled");
 };
 
 const resetSketchpad = () => {
+  toggleTools();
+
   const sketchpad = document.getElementById("sketchpad");
   const pixels = sketchpad.children;
 
@@ -137,7 +141,11 @@ const shortcutKeys = event => {
 };
 
 const setHamburgerForSmallerScreen = (shouldShow) => {
-  if (!shouldShow) return;
+  if (!shouldShow) {
+    const sideBar = document.getElementById("side-bar");
+    sideBar.style.visibility = "visible";
+    return;
+  };
 
   const hamburgerButton = document.querySelector("button#hamburger");
   hamburgerButton.classList.remove("hidden");
@@ -151,8 +159,19 @@ const toggleHamburgerButton = event => {
     : hamburgerButton.classList.add("hidden");
 }
 
+const toggleTools = () => {
+  const mediaQuery = matchMedia('(max-width: 985px)');
+  const isSmallScreen = mediaQuery.matches;
+  if (!isSmallScreen) return;
+
+  const sideBar = document.getElementById("side-bar");
+  sideBar.style.visibility === "hidden" 
+    ? sideBar.style.visibility = "visible"
+    : sideBar.style.visibility = "hidden";
+};
+
 window.addEventListener("DOMContentLoaded", event => {
-  const mediaQuery = matchMedia('(max-width: 950px)');
+  const mediaQuery = matchMedia('(max-width: 985px)');
 
   initializeGrid();
   setHamburgerForSmallerScreen(mediaQuery.matches);
@@ -181,5 +200,5 @@ window.addEventListener("DOMContentLoaded", event => {
   window.addEventListener("keydown", shortcutKeys);
 
   const hamburgerButton = document.querySelector("button#hamburger");
-  // hamburgerButton.addEventListener("click", viewTools);
+  hamburgerButton.addEventListener("click", toggleTools);
 });

@@ -175,18 +175,18 @@ footer {
   align-items: center;
 }
 
-@media (max-width: 950px) {
+@media (max-width: 985px) {
   #main-content {
     display: block;
   }
 
   button, #set-sketchpad-size, #color-palette {
-    font-size: 12px;
+    font-size: 24px;
   }
 
   input[type="color"] {
-    height: 24px;
-    width: 24px;
+    height: 48px;
+    width: 48px;
   }
 
   #side-bar {
@@ -194,6 +194,9 @@ footer {
     padding: 12px;
     gap: 12px;
     position: absolute;
+    top: 110px;
+    left: 0;
+    right: 0;
     visibility: hidden;
   }
 
