@@ -103,6 +103,9 @@ const handleMousedown = event => {
   const pixel = event.target;
   pixel.style.backgroundColor = getColor();
 
+  const coordinate = pixel.dataset.pixelCoordinate;
+  localStorage.setItem(`pixel-coordinate-${coordinate}`, pixel.style.backgroundColor);
+
   sketchpad.addEventListener("mouseover", colorPixel);
 }
 
