@@ -1,7 +1,3 @@
-/*----------------GLOBAL VARIABLES--------------------*/
-let currentColor = "#000000";
-/*----------------------------------------------------*/
-
 const changeSketchpadSizeLabelText = event => {
   const value = event.target.value;
   const text = `${value} X ${value}`;
@@ -34,7 +30,7 @@ const handleMousedown = event => {
   event.preventDefault();
   const sketchpad = event.currentTarget;
   const pixel = event.target;
-  pixel.style.backgroundColor = currentColor;
+  pixel.style.backgroundColor = "#000000";
 
   sketchpad.addEventListener("mouseover", colorPixel);
 }
@@ -48,8 +44,19 @@ const handleMouseup = event => {
 const colorPixel = event => {
   event.preventDefault();
   const pixel = event.target;
-  pixel.style.backgroundColor = currentColor;
+  pixel.style.backgroundColor = "#000000";
 }
+
+const removePreviousToggledButton = () => {
+  const toggledButton = document.querySelector(".toggled");
+  toggledButton.classList.remove("toggled");
+}
+
+const toggleButton = event => {
+  removePreviousToggledButton();
+  const button = event.currentTarget;
+  button.classList.add("toggled");
+};
 
 window.addEventListener("DOMContentLoaded", event => {
   initializeGrid();
@@ -63,4 +70,10 @@ window.addEventListener("DOMContentLoaded", event => {
   const sketchpad = document.getElementById("sketchpad");
   sketchpad.addEventListener("mousedown", handleMousedown);
   sketchpad.addEventListener("mouseup", handleMouseup);
+
+  const sideBarButtons = document.querySelectorAll("#side-bar > button");
+  sideBarButtons.forEach(button => {
+    if (button.getAttribute("id") === "reset") return;
+    button.addEventListener("click", toggleButton);
+  });
 });

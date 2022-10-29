@@ -29,12 +29,12 @@ button {
   font-family: var(--main-font);
   color: var(--font-color);
   border: none;
-  font-size: 36px;
+  font-size: 24px;
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
 }
-button:hover {
+button:hover, .toggled {
   transform: scale(1.1);
   text-shadow: 
     0 0 7px #fff,
@@ -73,7 +73,7 @@ button:hover {
 }
 
 #color-palette {
-  font-size: 36px;
+  font-size: 24px;
 }
 input[type="color"] {
   -webkit-appearance: none;
