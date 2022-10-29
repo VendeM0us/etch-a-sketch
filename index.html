@@ -13,6 +13,10 @@
   <h1 id="title">Etch-a-Sketch</h1>
   <div id="main-content">
     <div id="side-bar">
+      <div id="color-palette">
+        <label for="choose-color">Color Palette:</label>
+        <input type="color" id="choose-color" name="choose-color" value="#000">
+      </div>
       <button id="draw"><i class="fa-solid fa-pencil"></i> DRAW</button>
       <button id="eraser"><i class="fa-solid fa-eraser"></i> ERASE</button>
       <button id="rainbow"><i class="fa-solid fa-palette"></i> RAINBOW MODE</button>
@@ -20,12 +24,15 @@
         Sketchpad Size:
         <div>
           <input type="range" id="sketchpad-size" name="sketchpad-size" min="16" max="100" step="1" value="16">
-          <label for="sketchpad-size">16 X 16</label>
+          <br><label for="sketchpad-size">16 X 16</label>
         </div>
         <button id="apply-sketchpad-size">APPLY</button>
       </div>
     </div>
-    <div id="sketchpad-container"></div>
+    <div id="sketchpad-container">
+      <div id="sketchpad"></div>
+    </div>
   </div>
+  <footer>Coded by: VendeM0us</footer>
 </body>
 </html>

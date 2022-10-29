@@ -55,7 +55,7 @@ button:hover {
 
 #main-content {
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 30% 70%;
 }
 
 #side-bar {
@@ -63,8 +63,35 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 24px;
+  padding: 48px;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
   gap: 48px;
+  border: 2px solid var(--font-color);
+  border-radius: 25px;
+}
+
+#color-palette {
+  font-size: 36px;
+}
+input[type="color"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 48px;
+  width: 48px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 50%;
+  border: 2px solid var(--font-color);
+}
+input[type="color"]::-moz-color-swatch {
+  border-radius: 50%;
+  border: 2px solid var(--font-color);
 }
 
 #set-sketchpad-size {
@@ -75,6 +102,7 @@ button:hover {
   justify-content: center;
   align-items: flex-start;
   gap: 8px;
+  width: 100%;
 }
 button#apply-sketchpad-size {
   margin-top: 24px;
@@ -115,4 +143,24 @@ input[type="range"]::-moz-range-track {
   height: 2px;
   background-color: var(--font-color);
   margin-top: -20px;
+}
+
+#sketchpad-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#sketchpad {
+  height: 600px;
+  width: 600px;
+  background-color: var(--sketchpad-color);
+  border-radius: 15px;
+}
+
+footer {
+  font-size: 24px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
