@@ -23,7 +23,7 @@ const initializeGrid = (size = 16) => {
 };
 
 const setSketchpadSize = event => {
-  toggleTools();
+  hideToolPanel();
   const rangeInput = document.querySelector("input#sketchpad-size");
   const size = Number(rangeInput.value);
   initializeGrid(size);
@@ -98,14 +98,14 @@ const removePreviousToggledButton = () => {
 }
 
 const toggleButton = event => {
-  toggleTools();
+  hideToolPanel();
   removePreviousToggledButton();
   const button = event.currentTarget;
   button.classList.add("toggled");
 };
 
 const resetSketchpad = () => {
-  toggleTools();
+  hideToolPanel();
 
   const sketchpad = document.getElementById("sketchpad");
   const pixels = sketchpad.children;
@@ -159,16 +159,27 @@ const toggleHamburgerButton = event => {
     : hamburgerButton.classList.add("hidden");
 }
 
-const toggleTools = () => {
+const hideToolPanel = () => {
   const mediaQuery = matchMedia('(max-width: 985px)');
   const isSmallScreen = mediaQuery.matches;
   if (!isSmallScreen) return;
 
   const sideBar = document.getElementById("side-bar");
-  sideBar.style.visibility === "hidden" 
+  sideBar.style.visibility ="hidden";
+};
+
+const toggleToolPanel = event => {
+  event.stopPropagation();
+
+  const mediaQuery = matchMedia('(max-width: 985px)');
+  const isSmallScreen = mediaQuery.matches;
+  if (!isSmallScreen) return;
+
+  const sideBar = document.getElementById("side-bar");
+  sideBar.style.visibility === "hidden"
     ? sideBar.style.visibility = "visible"
     : sideBar.style.visibility = "hidden";
-};
+}
 
 window.addEventListener("DOMContentLoaded", event => {
   const mediaQuery = matchMedia('(max-width: 985px)');
@@ -198,7 +209,8 @@ window.addEventListener("DOMContentLoaded", event => {
   resetButton.addEventListener("click", resetSketchpad);
 
   window.addEventListener("keydown", shortcutKeys);
+  window.addEventListener("click", hideToolPanel);
 
   const hamburgerButton = document.querySelector("button#hamburger");
-  hamburgerButton.addEventListener("click", toggleTools);
+  hamburgerButton.addEventListener("click", toggleToolPanel);
 });
