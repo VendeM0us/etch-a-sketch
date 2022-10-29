@@ -5,6 +5,10 @@
 
 :root {
   --main-font: Arcade;
+  --background: #141204;
+  --sketchpad-color: #F9EBE0;
+  --font-glow-color: #AE8E1C;
+  --font-color: white;
 }
 
 * {
@@ -15,4 +19,13 @@
 
 html {
   font-family: var(--main-font);
+  color: var(--font-color);
+  background-color: var(--background);
+  height: 100vh;
+}
+
+#title {
+  text-align: center;
+  margin: 12px auto;
+  font-size: 48px;
 }
