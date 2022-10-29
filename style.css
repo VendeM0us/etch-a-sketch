@@ -47,6 +47,10 @@ button:hover, .toggled {
     0 0 151px var(--font-glow-color);
 }
 
+.hidden {
+  display: none;
+}
+
 #title {
   text-align: center;
   margin: 12px auto;
@@ -147,6 +151,7 @@ input[type="range"]::-moz-range-track {
 
 #sketchpad-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -168,4 +173,46 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 950px) {
+  #main-content {
+    display: block;
+  }
+
+  button, #set-sketchpad-size, #color-palette {
+    font-size: 12px;
+  }
+
+  input[type="color"] {
+    height: 24px;
+    width: 24px;
+  }
+
+  #side-bar {
+    background-color: var(--background);
+    padding: 12px;
+    gap: 12px;
+    position: absolute;
+    visibility: hidden;
+  }
+
+  button#hamburger {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  #sketchpad {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 300px) {
+  #sketchpad {
+    width: 200px;
+    height: 200px;
+  }
 }

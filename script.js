@@ -136,8 +136,28 @@ const shortcutKeys = event => {
   if (button) button.classList.add("toggled");
 };
 
+const setHamburgerForSmallerScreen = (shouldShow) => {
+  if (!shouldShow) return;
+
+  const hamburgerButton = document.querySelector("button#hamburger");
+  hamburgerButton.classList.remove("hidden");
+};
+
+const toggleHamburgerButton = event => {
+  const hamburgerButton = document.querySelector("button#hamburger");
+  
+  event.target.matches === true 
+    ? hamburgerButton.classList.remove("hidden")
+    : hamburgerButton.classList.add("hidden");
+}
+
 window.addEventListener("DOMContentLoaded", event => {
+  const mediaQuery = matchMedia('(max-width: 950px)');
+
   initializeGrid();
+  setHamburgerForSmallerScreen(mediaQuery.matches);
+
+  mediaQuery.addEventListener("change", toggleHamburgerButton);
 
   const rangeInput = document.querySelector("input#sketchpad-size");
   rangeInput.addEventListener("input", changeSketchpadSizeLabelText);
@@ -159,4 +179,7 @@ window.addEventListener("DOMContentLoaded", event => {
   resetButton.addEventListener("click", resetSketchpad);
 
   window.addEventListener("keydown", shortcutKeys);
+
+  const hamburgerButton = document.querySelector("button#hamburger");
+  // hamburgerButton.addEventListener("click", viewTools);
 });
