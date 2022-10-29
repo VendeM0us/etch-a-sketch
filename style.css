@@ -78,6 +78,9 @@ button:hover, .toggled {
 
 #color-palette {
   font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 input[type="color"] {
   -webkit-appearance: none;
