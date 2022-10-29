@@ -1,3 +1,7 @@
+/*----------------GLOBAL VARIABLES--------------------*/
+let currentColor = "#000000";
+/*----------------------------------------------------*/
+
 const changeSketchpadSizeLabelText = event => {
   const value = event.target.value;
   const text = `${value} X ${value}`;
@@ -26,6 +30,27 @@ const setSketchpadSize = event => {
   initializeGrid(size);
 };
 
+const handleMousedown = event => {
+  event.preventDefault();
+  const sketchpad = event.currentTarget;
+  const pixel = event.target;
+  pixel.style.backgroundColor = currentColor;
+
+  sketchpad.addEventListener("mouseover", colorPixel);
+}
+
+const handleMouseup = event => {
+  event.preventDefault();
+  const sketchpad = event.currentTarget;
+  sketchpad.removeEventListener("mouseover", colorPixel);
+}
+
+const colorPixel = event => {
+  event.preventDefault();
+  const pixel = event.target;
+  pixel.style.backgroundColor = currentColor;
+}
+
 window.addEventListener("DOMContentLoaded", event => {
   initializeGrid();
 
@@ -34,4 +59,8 @@ window.addEventListener("DOMContentLoaded", event => {
 
   const confirmSketchpadSizeButton = document.querySelector("button#apply-sketchpad-size");
   confirmSketchpadSizeButton.addEventListener("click", setSketchpadSize);
+
+  const sketchpad = document.getElementById("sketchpad");
+  sketchpad.addEventListener("mousedown", handleMousedown);
+  sketchpad.addEventListener("mouseup", handleMouseup);
 });
