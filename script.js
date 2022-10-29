@@ -18,6 +18,17 @@ const removeAllPixelData = size => {
     }
   }
 }
+
+const saveColor = pixel => {
+  pixel.style.backgroundColor = getColor();
+  const coordinate = pixel.dataset.pixelCoordinate;
+
+  if (pixel.style.backgroundColor === "transparent") {
+    localStorage.removeItem(`pixel-coordinate-${coordinate}`);
+  } else {
+    localStorage.setItem(`pixel-coordinate-${coordinate}`, pixel.style.backgroundColor);
+  }
+};
 /*-----------------------------------------*/
 
 const changeSketchpadSizeLabelText = event => {
@@ -101,10 +112,7 @@ const handleMousedown = event => {
   event.preventDefault();
   const sketchpad = event.currentTarget;
   const pixel = event.target;
-  pixel.style.backgroundColor = getColor();
-
-  const coordinate = pixel.dataset.pixelCoordinate;
-  localStorage.setItem(`pixel-coordinate-${coordinate}`, pixel.style.backgroundColor);
+  saveColor(pixel);
 
   sketchpad.addEventListener("mouseover", colorPixel);
 }
@@ -118,14 +126,7 @@ const handleMouseup = event => {
 const colorPixel = event => {
   event.preventDefault();
   const pixel = event.target;
-  pixel.style.backgroundColor = getColor();
-
-  const coordinate = pixel.dataset.pixelCoordinate;
-  if (pixel.style.backgroundColor === "transparent") {
-    localStorage.removeItem(`pixel-coordinate-${coordinate}`);
-  } else {
-    localStorage.setItem(`pixel-coordinate-${coordinate}`, pixel.style.backgroundColor);
-  }
+  saveColor(pixel);
 }
 
 const removePreviousToggledButton = () => {
