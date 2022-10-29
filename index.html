@@ -5,10 +5,27 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
+  <script src="https://kit.fontawesome.com/f843330a5d.js" crossorigin="anonymous"></script>
   <script src="./script.js" defer></script>
   <title>Etch-a-Sketch</title>
 </head>
 <body>
   <h1 id="title">Etch-a-Sketch</h1>
+  <div id="main-content">
+    <div id="side-bar">
+      <button id="draw"><i class="fa-solid fa-pencil"></i> DRAW</button>
+      <button id="eraser"><i class="fa-solid fa-eraser"></i> ERASE</button>
+      <button id="rainbow"><i class="fa-solid fa-palette"></i> RAINBOW MODE</button>
+      <div id="set-sketchpad-size">
+        Sketchpad Size:
+        <div>
+          <input type="range" id="sketchpad-size" name="sketchpad-size" min="16" max="100" step="1" value="16">
+          <label for="sketchpad-size">16 X 16</label>
+        </div>
+        <button id="apply-sketchpad-size">APPLY</button>
+      </div>
+    </div>
+    <div id="sketchpad-container"></div>
+  </div>
 </body>
 </html>
