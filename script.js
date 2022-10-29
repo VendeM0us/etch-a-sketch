@@ -1,3 +1,5 @@
+let rgbDarkness = 1;
+
 const changeSketchpadSizeLabelText = event => {
   const value = event.target.value;
   const text = `${value} X ${value}`;
@@ -26,11 +28,53 @@ const setSketchpadSize = event => {
   initializeGrid(size);
 };
 
+const drawMode = () => {
+  const colorPalette = document.querySelector("input#choose-color");
+  const colorValue = colorPalette.value;
+  return colorValue;
+}
+
+const eraseMode = () => {
+  const colorValue = "transparent";
+  return colorValue;
+};
+
+const getRandomRGBValue = () => {
+  const min = 0, max = 255;
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const rainbowMode = () => {
+  if (rgbDarkness < 0) rgbDarkness = 1;
+
+  const rgb1 = Math.floor(getRandomRGBValue() * rgbDarkness);
+  const rgb2 = Math.floor(getRandomRGBValue() * rgbDarkness);
+  const rgb3 = Math.floor(getRandomRGBValue() * rgbDarkness);
+  const colorValue = `rgb(${rgb1}, ${rgb2}, ${rgb3})`;
+
+  rgbDarkness = Number((rgbDarkness - 0.1).toFixed(1));
+
+  return colorValue;
+};
+
+const getColor = () => {
+  const toggledButton = document.querySelector(".toggled");
+
+  switch (toggledButton.getAttribute("id")) {
+    case 'draw':
+      return drawMode();
+    case 'eraser':
+      return eraseMode();
+    case 'rainbow':
+      return rainbowMode();
+  }
+};
+
 const handleMousedown = event => {
   event.preventDefault();
   const sketchpad = event.currentTarget;
   const pixel = event.target;
-  pixel.style.backgroundColor = "#000000";
+  pixel.style.backgroundColor = getColor();
 
   sketchpad.addEventListener("mouseover", colorPixel);
 }
@@ -44,7 +88,7 @@ const handleMouseup = event => {
 const colorPixel = event => {
   event.preventDefault();
   const pixel = event.target;
-  pixel.style.backgroundColor = "#000000";
+  pixel.style.backgroundColor = getColor();
 }
 
 const removePreviousToggledButton = () => {
@@ -56,6 +100,16 @@ const toggleButton = event => {
   removePreviousToggledButton();
   const button = event.currentTarget;
   button.classList.add("toggled");
+};
+
+const resetSketchpad = event => {
+  const sketchpad = document.getElementById("sketchpad");
+  const pixels = sketchpad.children;
+
+  for (let i = 0; i < pixels.length; i++) {
+    const pixel = pixels[i];
+    pixel.style.backgroundColor = eraseMode();
+  }
 };
 
 window.addEventListener("DOMContentLoaded", event => {
@@ -76,4 +130,7 @@ window.addEventListener("DOMContentLoaded", event => {
     if (button.getAttribute("id") === "reset") return;
     button.addEventListener("click", toggleButton);
   });
+
+  const resetButton = document.querySelector("button#reset");
+  resetButton.addEventListener("click", resetSketchpad);
 });
